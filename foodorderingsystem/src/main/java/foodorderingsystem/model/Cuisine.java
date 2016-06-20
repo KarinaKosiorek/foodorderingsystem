@@ -9,36 +9,49 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Cuisine")
-public class Cuisine {
+public class Cuisine
+{
 
   @Id
   @Column(name = "CuisineID")
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int cuisineID;
 
   @Column(name = "Name")
   private String name;
 
-  public Cuisine() {
+  public Cuisine()
+  {
   }
 
-  public Cuisine(String name) {
+  public Cuisine(int cuisineID, String name)
+  {
+    this.cuisineID = cuisineID;
     this.name = name;
   }
 
-  public int getCuisineID() {
+  public Cuisine(String name)
+  {
+    this.name = name;
+  }
+
+  public int getCuisineID()
+  {
     return cuisineID;
   }
 
-  public void setCuisineID(int cuisineID) {
+  public void setCuisineID(int cuisineID)
+  {
     this.cuisineID = cuisineID;
   }
 
-  public String getName() {
+  public String getName()
+  {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(String name)
+  {
     this.name = name;
   }
 }

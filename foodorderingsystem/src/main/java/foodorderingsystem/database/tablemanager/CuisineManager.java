@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 import foodorderingsystem.model.Cuisine;
 
@@ -35,6 +35,29 @@ public class CuisineManager
     {
       addCuisine("Italian");
     }
+  }
+
+  private Integer addCuisine(int id, String name)
+  {
+    Session session = factory.openSession();
+    Transaction tx = null;
+    Integer cuisineID = null;
+    try
+    {
+      tx = session.beginTransaction();
+      Cuisine cuisine = new Cuisine(id, name);
+      cuisineID = (Integer) session.save(cuisine);
+      tx.commit();
+    } catch (HibernateException e)
+    {
+      if (tx != null)
+        tx.rollback();
+      e.printStackTrace();
+    } finally
+    {
+      session.close();
+    }
+    return cuisineID;
   }
 
   private boolean exists(Cuisine cuisine)
@@ -143,7 +166,7 @@ public class CuisineManager
     try
     {
       tx = session.beginTransaction();
-      Query<Cuisine> query = session.createQuery("FROM Cuisine WHERE Name = :name");
+      Query query = session.createQuery("FROM Cuisine WHERE Name = :name");
       query.setParameter("name", name);
       cuisines = query.list();
       tx.commit();

@@ -12,7 +12,7 @@ Run options for fosclient application:
 
 With the option -order, user also need to specify at least one of the following options:
 ---------------------------------------------------------------------------------------------
--lunch [maincourseID+dessertID]					: ordered lunch with main course and dessert
+-lunch [maincourseID#dessertID]					: ordered lunch with main course and dessert
 -drink [drinkID]								: ordered drink
 -address [address]								: client address			
 -phone [phone_number]							: client phone number
@@ -28,7 +28,7 @@ EXAMPLES:
 ---------------------------------------------------------------------------------------------
 fosclient -host 127.0.0.1 -port 8080 -menu		: lists menu
 fosclient -cuisine 2							: lists main courses for cuisine with ID = 2
-fosclient -order -lunch 1+3 -drink 1 -lemon		: orders lunch with main course with ID = 1 and dessert with ID = 3, drink with ID = 2 with lemon
-fosclient -order -lunch 1+1						: orders only lunch with main course with ID = 1 and dessert with ID = 1
+fosclient -order -lunch 1#3 -drink 1 -lemon		: orders lunch with main course with ID = 1 and dessert with ID = 3, drink with ID = 2 with lemon
+fosclient -order -lunch 1#1						: orders only lunch with main course with ID = 1 and dessert with ID = 1
 fosclient -order -drink 2 -icecubes				: orders only drink with ID = 2 with ice cubes
 

@@ -13,11 +13,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "MainCourse")
-public class MainCourse {
+public class MainCourse
+{
 
   @Id
   @Column(name = "MainCourseID")
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int mainCourseID;
 
   @ManyToOne
@@ -30,44 +31,60 @@ public class MainCourse {
   @Column(name = "Price", precision = 10, scale = 2)
   private BigDecimal price;
 
-  public MainCourse() {
+  public MainCourse()
+  {
   }
 
-  public MainCourse(Cuisine cuisine, String name, BigDecimal price) {
+  public MainCourse(Cuisine cuisine, String name, BigDecimal price)
+  {
     this.cuisine = cuisine;
     this.name = name;
     this.price = price;
   }
 
-  public int getMainCourseID() {
-    return mainCourseID;
-  }
-
-  public void setMainCourseID(int mainCourseID) {
+  public MainCourse(int mainCourseID, Cuisine cuisine, String name, BigDecimal price)
+  {
+    this(cuisine, name, price);
     this.mainCourseID = mainCourseID;
   }
 
-  public Cuisine getCuisine() {
+  public int getMainCourseID()
+  {
+    return mainCourseID;
+  }
+
+  public void setMainCourseID(int mainCourseID)
+  {
+    this.mainCourseID = mainCourseID;
+  }
+
+  public Cuisine getCuisine()
+  {
     return cuisine;
   }
 
-  public void setCuisine(Cuisine cuisine) {
+  public void setCuisine(Cuisine cuisine)
+  {
     this.cuisine = cuisine;
   }
 
-  public String getName() {
+  public String getName()
+  {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(String name)
+  {
     this.name = name;
   }
 
-  public BigDecimal getPrice() {
+  public BigDecimal getPrice()
+  {
     return price;
   }
 
-  public void setPrice(BigDecimal price) {
+  public void setPrice(BigDecimal price)
+  {
     this.price = price;
   }
 }
