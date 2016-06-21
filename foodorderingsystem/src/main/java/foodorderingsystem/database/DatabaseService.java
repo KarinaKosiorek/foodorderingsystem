@@ -1,5 +1,6 @@
 package foodorderingsystem.database;
 
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,7 +12,8 @@ import org.hibernate.cfg.Configuration;
 import foodorderingsystem.database.tablemanager.QueryManager;
 import foodorderingsystem.main.FOSClientConfiguration;
 
-public class DatabaseService {
+public class DatabaseService
+{
 
   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
   static final String DB_URL = "jdbc:mysql://localhost/?useSSL=false";
@@ -21,91 +23,117 @@ public class DatabaseService {
   private static SessionFactory factory;
   private QueryManager queryManager;
 
-  public void initDatabase() throws Exception {
+  public void initDatabase() throws Exception
+  {
     createDatabaseIfNotExists();
     initDatabaseManagement();
     queryManager.generateExampleRecords();
   }
 
-  private void initDatabaseManagement() throws Exception {
+  private void initDatabaseManagement() throws Exception
+  {
     factory = new Configuration().configure().buildSessionFactory();
-    if (factory == null) {
+    if (factory == null)
+    {
       throw new IllegalStateException("Cannot instantiate hibernate factory.");
     }
     this.queryManager = new QueryManager(factory);
-    if (queryManager == null) {
+    if (queryManager == null)
+    {
       throw new Exception("Error with database management system.");
     }
   }
 
-  private void createDatabaseIfNotExists() throws Exception {
+  private void createDatabaseIfNotExists() throws Exception
+  {
     Connection conn = null;
     Statement stmt = null;
-    try {
+    try
+    {
       Class.forName(JDBC_DRIVER).newInstance();
       System.out.println(DB_URL);
       conn = DriverManager.getConnection(DB_URL, USER, PASS);
       stmt = conn.createStatement();
       String sql = "CREATE DATABASE IF NOT EXISTS FoodOrderingSystemDB";
       stmt.executeUpdate(sql);
-    } catch (SQLException se) {
-    } catch (Exception e) {
+    } catch (SQLException se)
+    {
+    } catch (Exception e)
+    {
       throw e;
-    } finally {
-      try {
-        if (stmt != null) {
+    } finally
+    {
+      try
+      {
+        if (stmt != null)
+        {
           stmt.close();
         }
-      } catch (SQLException se2) {
+      } catch (SQLException se2)
+      {
       }
-      try {
-        if (conn != null) {
+      try
+      {
+        if (conn != null)
+        {
           conn.close();
         }
-      } catch (SQLException se) {
+      } catch (SQLException se)
+      {
       }
     }
   }
 
   public Integer makeOrder(String lunch, String drinkID, String lemon, String icecubes, String address, String phone)
-      throws Exception {
+      throws Exception
+  {
     boolean lemonOption = false;
     boolean iceCubesOption = false;
-    if (lemon != null && lemon.equals(FOSClientConfiguration.LEMON_OPTION)) {
+    if (lemon != null && lemon.equals(FOSClientConfiguration.LEMON_OPTION))
+    {
       lemonOption = true;
     }
-    if (icecubes != null && icecubes.equals(FOSClientConfiguration.ICECUBES_OPTION)) {
+    if (icecubes != null && icecubes.equals(FOSClientConfiguration.ICECUBES_OPTION))
+    {
       iceCubesOption = true;
     }
-    if (address == null || address.isEmpty()) {
+    if (address == null || address.isEmpty())
+    {
       throw new Exception("Address must be provided!");
     }
     return queryManager.makeOrder(lunch, drinkID, lemonOption, iceCubesOption, address, phone);
   }
 
-  public void closeDatabaseService() {
-    if (factory != null) {
+  public void closeDatabaseService()
+  {
+    if (factory != null)
+    {
       factory.close();
     }
   }
 
-  public String getMenu() {
-    return queryManager.getMenu();
+  public void printMenu(PrintWriter out)
+  {
+    queryManager.printMenu(out);
   }
 
-  public String getCuisines() {
-    return queryManager.getCuisines();
+  public void printCuisines(PrintWriter out)
+  {
+    queryManager.printCuisines(out);
   }
 
-  public String getCuisine(String cuisine) {
-    return queryManager.getCuisine(cuisine);
+  public void printCuisine(PrintWriter out, String cuisine)
+  {
+    queryManager.printCuisine(out, cuisine);
   }
 
-  public String getDrinks() {
-    return queryManager.getDrinks();
+  public void printDrinks(PrintWriter out)
+  {
+    queryManager.printDrinks(out);
   }
 
-  public String getDesserts() {
-    return queryManager.getDesserts();
+  public void printDesserts(PrintWriter out)
+  {
+    queryManager.printDesserts(out);
   }
 }

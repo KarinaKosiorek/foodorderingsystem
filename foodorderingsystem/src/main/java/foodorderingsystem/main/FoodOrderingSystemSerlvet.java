@@ -17,7 +17,8 @@ import org.slf4j.LoggerFactory;
 
 import foodorderingsystem.database.DatabaseService;
 
-public class FoodOrderingSystemSerlvet extends HttpServlet {
+public class FoodOrderingSystemSerlvet extends HttpServlet
+{
 
   public final static Logger LOGGER = LoggerFactory.getLogger(FoodOrderingSystemSerlvet.class);
   private static final long serialVersionUID = -4802159941011807667L;
@@ -25,34 +26,42 @@ public class FoodOrderingSystemSerlvet extends HttpServlet {
   private StringBuilder userHelp = new StringBuilder();
 
   @Override
-  public void init(ServletConfig servletConfig) throws ServletException {
+  public void init(ServletConfig servletConfig) throws ServletException
+  {
     initDatabase();
     initHelpForClient();
   }
 
-  private void initHelpForClient() {
-    try {
+  private void initHelpForClient()
+  {
+    try
+    {
       InputStream in = FoodOrderingSystemSerlvet.class.getClassLoader()
           .getResourceAsStream(FOSClientConfiguration.SYNTAX_HELP_FILE);
       BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
       String line = bufferedReader.readLine();
-      while (line != null) {
+      while (line != null)
+      {
         userHelp.append(line);
         userHelp.append('\n');
         line = bufferedReader.readLine();
       }
       bufferedReader.close();
-    } catch (Exception e) {
+    } catch (Exception e)
+    {
       LOGGER.error("Error reading from client help syntax file: " + FOSClientConfiguration.SYNTAX_HELP_FILE);
       e.printStackTrace();
     }
   }
 
-  private void initDatabase() {
+  private void initDatabase()
+  {
     LOGGER.info("Welcome in FoodOrderingSystem service.");
-    try {
+    try
+    {
       databaseservcie.initDatabase();
-    } catch (Exception e) {
+    } catch (Exception e)
+    {
       LOGGER.error("Error with initialization of database:: FoodOrderingSystemDB");
       LOGGER.error("Exception message:");
       e.printStackTrace();
@@ -60,13 +69,14 @@ public class FoodOrderingSystemSerlvet extends HttpServlet {
   }
 
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+  {
     doGet(request, response);
   }
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+  {
     response.setContentType("text/plain");
     PrintWriter out = response.getWriter();
 
@@ -84,44 +94,65 @@ public class FoodOrderingSystemSerlvet extends HttpServlet {
     String address = request.getParameter(FOSClientConfiguration.ADDRESS_OPTION);
     String phone = request.getParameter(FOSClientConfiguration.PHONE_OPTION);
 
-    if (request.getParameterMap().size() == 0) {
-      out.println(userHelp.toString());
+    if (request.getParameterMap().size() == 0)
+    {
+      printUserHelp(userHelp, out);
       return;
     }
-    if (help != null && help.equals(FOSClientConfiguration.HELP_OPTION)) {
-      out.println(userHelp.toString());
+    if (help != null && help.equals(FOSClientConfiguration.HELP_OPTION))
+    {
+      printUserHelp(userHelp, out);
     }
-    if (menu != null && menu.equals(FOSClientConfiguration.MENU_OPTION)) {
-      out.println(databaseservcie.getMenu());
+    if (menu != null && menu.equals(FOSClientConfiguration.MENU_OPTION))
+    {
+      databaseservcie.printMenu(out);
     }
-    if (cuisines != null && menu.equals(FOSClientConfiguration.CUISINES_OPTION)) {
-      out.println(databaseservcie.getCuisines());
+    if (cuisines != null && cuisines.equals(FOSClientConfiguration.CUISINES_OPTION))
+    {
+      databaseservcie.printCuisines(out);
     }
-    if (cuisine != null) {
-      out.println(databaseservcie.getCuisine(cuisine));
+    if (cuisine != null)
+    {
+      databaseservcie.printCuisine(out, cuisine);
     }
-    if (drinks != null && drinks.equals(FOSClientConfiguration.DRINKS_OPTION)) {
-      out.println(databaseservcie.getDrinks());
+    if (drinks != null && drinks.equals(FOSClientConfiguration.DRINKS_OPTION))
+    {
+      databaseservcie.printDrinks(out);
     }
-    if (desserts != null && desserts.equals(FOSClientConfiguration.DESSERTS_OPTION)) {
-      out.println(databaseservcie.getDesserts());
+    if (desserts != null && desserts.equals(FOSClientConfiguration.DESSERTS_OPTION))
+    {
+      databaseservcie.printDesserts(out);
     }
-    if (order != null && order.equals(FOSClientConfiguration.ORDER_OPTION)) {
-      try {
+    if (order != null && order.equals(FOSClientConfiguration.ORDER_OPTION))
+    {
+      try
+      {
         Integer id = databaseservcie.makeOrder(lunch, drink, lemon, icecubes, address, phone);
         String responseL = "Order received with identifier: " + id;
         out.println(responseL);
         LOGGER.info("Response to client sent: \n" + responseL);
-      } catch (Exception e) {
+      } catch (Exception e)
+      {
         out.println("Order error: \n" + e.getMessage());
         LOGGER.error("Order error: \n" + e.getMessage());
         e.printStackTrace();
       }
     }
+    out.close();
+  }
+
+  private void printUserHelp(StringBuilder userHelp, PrintWriter out)
+  {
+    String[] lines = userHelp.toString().split("\n");
+    for (String line : lines)
+    {
+      out.println(line);
+    }
   }
 
   @Override
-  public void destroy() {
+  public void destroy()
+  {
     databaseservcie.closeDatabaseService();
   }
 }

@@ -1,9 +1,10 @@
 package foodorderingsystem.main;
 
-public class FOSClientConfiguration {
+public class FOSClientConfiguration
+{
   // client syntax options
   public static final String MENU_OPTION = "menu";
-  public static final String CUISINES_OPTION = "cuisine";
+  public static final String CUISINES_OPTION = "cuisines";
   public static final String CUISINE_OPTION = "cuisine";
   public static final String DESSERTS_OPTION = "desserts";
   public static final String DRINKS_OPTION = "drinks";
