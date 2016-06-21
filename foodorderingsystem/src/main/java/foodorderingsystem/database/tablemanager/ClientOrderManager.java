@@ -23,7 +23,7 @@ public class ClientOrderManager {
   }
 
   public Integer addClientOrder(MainCourse mainCourse, Dessert dessert, Drink drink, BigDecimal price, boolean lemon,
-      boolean iceCubes, String address, String phone) {
+      boolean iceCubes, String address, String phone) throws Exception {
     Session session = factory.openSession();
     Transaction tx = null;
     Integer clientOrderID = null;
@@ -33,16 +33,17 @@ public class ClientOrderManager {
       clientOrderID = (Integer) session.save(clientOrder);
       tx.commit();
     } catch (HibernateException e) {
-      if (tx != null)
+      if (tx != null) {
         tx.rollback();
-      e.printStackTrace();
+      }
+      throw e;
     } finally {
       session.close();
     }
     return clientOrderID;
   }
 
-  @SuppressWarnings({ "unchecked", "deprecation" })
+  @SuppressWarnings({ "unchecked" })
   public List<ClientOrder> listClientOrders() {
     List<ClientOrder> clientOrders = new ArrayList<ClientOrder>();
     Session session = factory.openSession();
@@ -55,9 +56,10 @@ public class ClientOrderManager {
       // }
       tx.commit();
     } catch (HibernateException e) {
-      if (tx != null)
+      if (tx != null) {
         tx.rollback();
-      e.printStackTrace();
+      }
+      throw e;
     } finally {
       session.close();
     }

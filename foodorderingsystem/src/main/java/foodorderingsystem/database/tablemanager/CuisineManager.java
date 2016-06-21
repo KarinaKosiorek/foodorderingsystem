@@ -11,179 +11,148 @@ import org.hibernate.Transaction;
 
 import foodorderingsystem.model.Cuisine;
 
-public class CuisineManager
-{
+public class CuisineManager {
 
   private SessionFactory factory;
 
-  public void setFactory(SessionFactory factory)
-  {
+  public void setFactory(SessionFactory factory) {
     this.factory = factory;
   }
 
-  public void initCuisines()
-  {
-    if (!exists(getCuisine("Polish")))
-    {
+  public void initCuisines() {
+    if (!exists(getCuisine("Polish"))) {
       addCuisine("Polish");
     }
-    if (!exists(getCuisine("Mexican")))
-    {
+    if (!exists(getCuisine("Mexican"))) {
       addCuisine("Mexican");
     }
-    if (!exists(getCuisine("Italian")))
-    {
+    if (!exists(getCuisine("Italian"))) {
       addCuisine("Italian");
     }
   }
 
-  private Integer addCuisine(int id, String name)
-  {
+  @SuppressWarnings("unused")
+  private Integer addCuisine(int id, String name) {
     Session session = factory.openSession();
     Transaction tx = null;
     Integer cuisineID = null;
-    try
-    {
+    try {
       tx = session.beginTransaction();
       Cuisine cuisine = new Cuisine(id, name);
       cuisineID = (Integer) session.save(cuisine);
       tx.commit();
-    } catch (HibernateException e)
-    {
+    } catch (HibernateException e) {
       if (tx != null)
         tx.rollback();
       e.printStackTrace();
-    } finally
-    {
+    } finally {
       session.close();
     }
     return cuisineID;
   }
 
-  private boolean exists(Cuisine cuisine)
-  {
+  private boolean exists(Cuisine cuisine) {
     return cuisine != null;
   }
 
-  public Integer addCuisine(String name)
-  {
+  public Integer addCuisine(String name) {
     Session session = factory.openSession();
     Transaction tx = null;
     Integer cuisineID = null;
-    try
-    {
+    try {
       tx = session.beginTransaction();
       Cuisine cuisine = new Cuisine(name);
       cuisineID = (Integer) session.save(cuisine);
       tx.commit();
-    } catch (HibernateException e)
-    {
+    } catch (HibernateException e) {
       if (tx != null)
         tx.rollback();
       e.printStackTrace();
-    } finally
-    {
+    } finally {
       session.close();
     }
     return cuisineID;
   }
 
-  @SuppressWarnings({ "unchecked", "deprecation" })
-  public List<Cuisine> listCuisines()
-  {
+  @SuppressWarnings({ "unchecked" })
+  public List<Cuisine> listCuisines() {
     List<Cuisine> cuisines = new ArrayList<Cuisine>();
     Session session = factory.openSession();
     Transaction tx = null;
-    try
-    {
+    try {
       tx = session.beginTransaction();
       cuisines = session.createQuery("FROM Cuisine").list();
       // for (Iterator<Cuisine> iterator = cuisines.iterator(); iterator.hasNext();) {
       // Cuisine cuisine = iterator.next();
       // }
       tx.commit();
-    } catch (HibernateException e)
-    {
+    } catch (HibernateException e) {
       if (tx != null)
         tx.rollback();
       e.printStackTrace();
-    } finally
-    {
+    } finally {
       session.close();
     }
     return cuisines;
   }
 
-  public void updateCuisine(Integer cuisineID, String name)
-  {
+  public void updateCuisine(Integer cuisineID, String name) {
     Session session = factory.openSession();
     Transaction tx = null;
-    try
-    {
+    try {
       tx = session.beginTransaction();
       Cuisine cuisine = session.get(Cuisine.class, cuisineID);
       cuisine.setName(name);
       session.update(cuisine);
       tx.commit();
-    } catch (HibernateException e)
-    {
+    } catch (HibernateException e) {
       if (tx != null)
         tx.rollback();
       e.printStackTrace();
-    } finally
-    {
+    } finally {
       session.close();
     }
   }
 
-  public void deleteCousine(Integer cuisineID)
-  {
+  public void deleteCousine(Integer cuisineID) {
     Session session = factory.openSession();
     Transaction tx = null;
-    try
-    {
+    try {
       tx = session.beginTransaction();
       Cuisine cuisine = session.get(Cuisine.class, cuisineID);
       session.delete(cuisine);
       tx.commit();
-    } catch (HibernateException e)
-    {
+    } catch (HibernateException e) {
       if (tx != null)
         tx.rollback();
       e.printStackTrace();
-    } finally
-    {
+    } finally {
       session.close();
     }
   }
 
-  @SuppressWarnings("deprecation")
-  public Cuisine getCuisine(String name)
-  {
+  @SuppressWarnings("unchecked")
+  public Cuisine getCuisine(String name) {
     List<Cuisine> cuisines = new ArrayList<Cuisine>();
     Session session = factory.openSession();
     Transaction tx = null;
-    try
-    {
+    try {
       tx = session.beginTransaction();
       Query query = session.createQuery("FROM Cuisine WHERE Name = :name");
       query.setParameter("name", name);
       cuisines = query.list();
       tx.commit();
-    } catch (HibernateException e)
-    {
-      if (tx != null)
+    } catch (HibernateException e) {
+      if (tx != null) {
         tx.rollback();
+      }
       e.printStackTrace();
-    } finally
-    {
+    } finally {
       session.close();
     }
-    if (cuisines.size() > 0)
-    {
+    if (cuisines.size() > 0) {
       return cuisines.get(0);
-    } else
-    {
+    } else {
       return null;
     }
   }

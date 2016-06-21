@@ -1,34 +1,67 @@
-Run options for fosclient application:
 ---------------------------------------------------------------------------------------------
--help											: prints the help
--host [host]									: food ordering system server
--port [port]									: port  
--menu											: listing whole menu
--cuisines										: listing cuisines
--cuisine [cuisineID]							: listing main courses for specified cuisine
--drinks											: listing drinks
--desserts										: listing desserts
--order											: ordering lunch (main course + dessert) and/or drink with lemon and/or ice cubes optionally
-
-With the option -order, user also need to specify at least one of the following options:
+Run options for fosclient:
 ---------------------------------------------------------------------------------------------
--lunch [maincourseID#dessertID]					: ordered lunch with main course and dessert
--drink [drinkID]								: ordered drink
--address [address]								: client address			
--phone [phone_number]							: client phone number
+-help											
+	: prints the help
 
+-host [host]									
+	: food ordering system host
 
-If option -drink is used, user may optionally add:
----------------------------------------------------------------------------------------------
--lemon											: lemon for ordered drink
--icecubes										: ice cubes for ordered drink
+-port [port]									
+	: port  
+
+-menu											
+	: listing whole menu
+
+-cuisines										
+	: listing cuisines
+
+-cuisine [cuisineID]							
+	: listing main courses for specified cuisine
+
+-drinks											
+	: listing drinks
+
+-desserts										
+	: listing desserts
+
+-order											
+	: ordering lunch (main course + dessert) and/or drink with lemon and/or ice cubes optionally
+	With the option -order, user also need to specify at least one of the following options:
+
+		-lunch [maincourseID#dessertID]					
+			: ordered lunch with main course and dessert
+	
+		-drink [drinkID]				
+			: ordered drink
+			
+		-address [address]								
+			: client address			
+
+		-phone [phone_number]
+			: client phone number
+
+	If option -drink is used, user may optionally add:
+		
+		-lemon											
+			: lemon for ordered drink
+		-icecubes	
+			: ice cubes for ordered drink
 
 ---------------------------------------------------------------------------------------------
 EXAMPLES:
 ---------------------------------------------------------------------------------------------
-fosclient -host 127.0.0.1 -port 8080 -menu		: lists menu
-fosclient -cuisine 2							: lists main courses for cuisine with ID = 2
-fosclient -order -lunch 1#3 -drink 1 -lemon		: orders lunch with main course with ID = 1 and dessert with ID = 3, drink with ID = 2 with lemon
-fosclient -order -lunch 1#1						: orders only lunch with main course with ID = 1 and dessert with ID = 1
-fosclient -order -drink 2 -icecubes				: orders only drink with ID = 2 with ice cubes
+fosclient -host foodorderingsystem.com -port 8080 -menu		
+	: lists menu from food ordering system hosted on foodorderingsystem.com host on port 8080
+	 
+fosclient -cuisine 2							
+	: lists main courses for cuisine with ID = 2
+	
+fosclient -order -lunch 1#3 -drink 1 -lemon		
+	: orders lunch with main course with ID = 1 and dessert with ID = 3, and drink with ID = 2 with lemon
 
+fosclient -order -lunch 1#1						
+	: orders lunch with main course with ID = 1 and dessert with ID = 1, no drink
+	
+fosclient -order -drink 2 -icecubes -lemon				
+	: orders drink with ID = 2 with ice cubes and lemon, no lunch

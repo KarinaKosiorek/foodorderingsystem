@@ -17,5 +17,4 @@ public class FOSClientConfiguration {
   public static final String PHONE_OPTION = "phone";
 
   public static final String SYNTAX_HELP_FILE = "clientsyntax.txt";
-
 }

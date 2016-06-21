@@ -12,8 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "ClientOrder")
-public class ClientOrder
-{
+public class ClientOrder {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,13 +46,11 @@ public class ClientOrder
   @Column(name = "Done")
   private boolean done = false;
 
-  public ClientOrder()
-  {
+  public ClientOrder() {
   }
 
   public ClientOrder(MainCourse mainCourse, Dessert dessert, Drink drink, BigDecimal price, boolean lemon, boolean iceCubes,
-      String address, String phone)
-  {
+      String address, String phone) {
     this.mainCourse = mainCourse;
     this.dessert = dessert;
     this.drink = drink;
@@ -64,83 +61,91 @@ public class ClientOrder
     this.phone = phone;
   }
 
-  public int getOrderID()
-  {
+  public int getOrderID() {
     return clientOrderID;
   }
 
-  public void setOrderID(int orderID)
-  {
+  public void setOrderID(int orderID) {
     this.clientOrderID = orderID;
   }
 
-  public BigDecimal getPrice()
-  {
+  public BigDecimal getPrice() {
     return price;
   }
 
-  public void setPrice(BigDecimal price)
-  {
+  public void setPrice(BigDecimal price) {
     this.price = price;
   }
 
-  public boolean isLemon()
-  {
+  public boolean isLemon() {
     return lemon;
   }
 
-  public void setLemon(boolean lemon)
-  {
+  public void setLemon(boolean lemon) {
     this.lemon = lemon;
   }
 
-  public boolean isIceCubes()
-  {
+  public boolean isIceCubes() {
     return iceCubes;
   }
 
-  public void setIceCubes(boolean iceCubes)
-  {
+  public void setIceCubes(boolean iceCubes) {
     this.iceCubes = iceCubes;
   }
 
-  public Drink getDrink()
-  {
+  public Drink getDrink() {
     return drink;
   }
 
-  public void setDrink(Drink drink)
-  {
+  public void setDrink(Drink drink) {
     this.drink = drink;
   }
 
-  public int getClientOrderID()
-  {
+  public int getClientOrderID() {
     return clientOrderID;
   }
 
-  public void setClientOrderID(int clientOrderID)
-  {
+  public void setClientOrderID(int clientOrderID) {
     this.clientOrderID = clientOrderID;
   }
 
-  public MainCourse getMainCourse()
-  {
+  public MainCourse getMainCourse() {
     return mainCourse;
   }
 
-  public void setMainCourse(MainCourse mainCourse)
-  {
+  public void setMainCourse(MainCourse mainCourse) {
     this.mainCourse = mainCourse;
   }
 
-  public Dessert getDessert()
-  {
+  public Dessert getDessert() {
     return dessert;
   }
 
-  public void setDessert(Dessert dessert)
-  {
+  public void setDessert(Dessert dessert) {
     this.dessert = dessert;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
+
+  public boolean isDone() {
+    return done;
+  }
+
+  public void setDone(boolean done) {
+    this.done = done;
   }
 }
