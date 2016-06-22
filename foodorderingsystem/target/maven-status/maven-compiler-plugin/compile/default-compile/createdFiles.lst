@@ -1,0 +1,14 @@
+foodorderingsystem\database\tablemanager\CuisineManager.class
+foodorderingsystem\model\Drink.class
+foodorderingsystem\database\tablemanager\ClientOrderManager.class
+foodorderingsystem\database\tablemanager\DrinkManager.class
+foodorderingsystem\model\Dessert.class
+foodorderingsystem\main\FoodOrderingSystemSerlvet.class
+foodorderingsystem\database\DatabaseService.class
+foodorderingsystem\model\ClientOrder.class
+foodorderingsystem\database\tablemanager\DessertManager.class
+foodorderingsystem\database\tablemanager\MainCourseManager.class
+foodorderingsystem\model\MainCourse.class
+foodorderingsystem\database\tablemanager\QueryManager.class
+foodorderingsystem\main\FOSClientConfiguration.class
+foodorderingsystem\model\Cuisine.class
